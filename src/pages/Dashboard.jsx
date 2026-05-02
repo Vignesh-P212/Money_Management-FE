@@ -22,8 +22,12 @@ const fmt = (n) => `$${n?.toLocaleString() || 0}`;
 
 const Dashboard = () => {
   const { data: insightsData, isLoading: insightsLoading } = useQuery({ queryKey: ['insights'], queryFn: getInsights });
-  const { data: assets = [], isLoading: assetsLoading } = useQuery({ queryKey: ['assets'], queryFn: getAssets });
+const { data: assetsResponse, isLoading: assetsLoading } = useQuery({
+  queryKey: ['assets'],
+  queryFn: getAssets
+});
 
+const assets = assetsResponse?.data || [];
   if (insightsLoading || assetsLoading) return <AppLayout><div className="p-8">Loading dashboard...</div></AppLayout>;
 
   const data = insightsData || { snapshots: [], savingsRate: 0, emergencyFundCoverage: 0, debtToIncomeRatio: 0, netWorth: 0, totalAssets: 0, totalLiabilities: 0, monthlyIncome: 0, monthlyExpense: 0 };

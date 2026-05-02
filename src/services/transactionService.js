@@ -2,7 +2,7 @@ import axiosInstance from "../api/axiosInstance";
 
 export const getTransactions = async (params) => {
     const res = await axiosInstance.get('/api/transactions', { params });
-    return res.data;
+   return res.data.data || [];
 };
 
 export const createTransaction = async (data) => {

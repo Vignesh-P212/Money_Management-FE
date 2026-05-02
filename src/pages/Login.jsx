@@ -17,19 +17,29 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const data = await loginUser({ email, password });
-      dispatch(setCredentials({ user: data, token: data.token }));
-      navigate('/dashboard');
-    } catch (err) {
-      toast({ variant: 'destructive', title: 'Login Failed', description: err?.response?.data?.message || 'Invalid credentials' });
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const data = await loginUser({ email, password });
+
+    dispatch(setCredentials({
+      user: data.user
+    }));
+
+    navigate('/dashboard');
+
+  } catch (err) {
+    toast({
+      variant: 'destructive',
+      title: 'Login Failed',
+      description: err?.response?.data?.message || 'Invalid credentials'
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
