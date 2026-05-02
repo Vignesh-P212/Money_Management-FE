@@ -2,7 +2,7 @@ import axiosInstance from "../api/axiosInstance";
 
 export const getGoals = async () => {
     const res = await axiosInstance.get('/api/goals');
-    return res.data;
+     return res.data.data || [];
 };
 
 export const createGoal = async (data) => {

@@ -16,8 +16,14 @@ const fmt = (n) => `$${n?.toLocaleString() || 0}`;
 
 const Wealth = () => {
   const queryClient = useQueryClient();
-  const { data: assets = [], isLoading: assetsLoading } = useQuery({ queryKey: ['assets'], queryFn: getAssets });
-  const { data: liabilities = [], isLoading: liabilitiesLoading } = useQuery({ queryKey: ['liabilities'], queryFn: getLiabilities });
+const { data: assetsResponse, isLoading: assetsLoading } =
+  useQuery({ queryKey: ['assets'], queryFn: getAssets });
+
+const { data: liabilitiesResponse, isLoading: liabilitiesLoading } =
+  useQuery({ queryKey: ['liabilities'], queryFn: getLiabilities });
+
+const assets = assetsResponse?.data || [];
+const liabilities = liabilitiesResponse?.data || [];
 
   const createAssetMutation = useMutation({ mutationFn: createAsset, onSuccess: () => queryClient.invalidateQueries({ queryKey: ['assets'] }) });
   const deleteAssetMutation = useMutation({ mutationFn: deleteAsset, onSuccess: () => queryClient.invalidateQueries({ queryKey: ['assets'] }) });
